@@ -39,7 +39,7 @@ layout = [
 window = sg.Window("Gnuchan Calculator", layout)
 
 current_Number = []
-operationList = []
+allOperation = []
 
 while True:
     event, Value = window.read()
@@ -50,18 +50,18 @@ while True:
         num_string = "".join(current_Number)
         window["-TEXT-"].update(num_string)
     if event in ["+","-","/","*","%"]:
-        operationList.append("".join(current_Number))
+        allOperation.append("".join(current_Number))
         current_Number = []
-        operationList.append(event)
+        allOperation.append(event)
         window["-TEXT-"].update("")
     if event == "Enter":
-        operationList.append("".join(current_Number))
-        result = eval("".join(operationList))
+        allOperation.append("".join(current_Number))
+        result = eval("".join(allOperation))
         window["-TEXT-"].update(result)
-        operationList = []
+        allOperation = []
     if event == "Clear":
         current_Number = []
-        operationList = []
+        allOperation = []
         window["-TEXT-"].update("")
     if event == "My Website":
         webbrowser.open("https://archkubi.github.io/")
