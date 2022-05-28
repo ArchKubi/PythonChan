@@ -60,7 +60,7 @@ dictionary_file = 'dictionary.pickle'
 if not pathlib.Path(dictionary_file).is_file():
     # Load dictionary from web if file not found
     try:
-        url = "https://github.com/ArchKubi/PythonChan/blob/main/Gnuchan-TextEditor/python.txt"
+        url = "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/python.txt"
         response = requests.get(url, allow_redirects=True)
         text = response.content.decode()
         dictionary = [word for word in text.splitlines() if word.isalpha()]

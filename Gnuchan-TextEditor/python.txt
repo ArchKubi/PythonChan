@@ -1,5 +1,7 @@
+######################################
 import
 from
+######################################
 print
 if
 elif
@@ -9,18 +11,28 @@ break
 in
 not
 is
-append
-remove
-pop
-clear
-count
-popitem
-copy
-update
-add
-#remove - clear
 try
 with
 while
 True
 False
+return
+for
+While
+def
+##### list
+append
+remove
+pop
+clear
+count
+#### Dictionaries
+popitem
+copy
+update
+#### Sets
+add
+#remove - clear
+######################################
+
+
