@@ -43,8 +43,9 @@ allOperation = []
 
 while True:
     event, Value = window.read()
-    if event == sg.WINDOW_CLOSED:
+    if event in (sg.WIN_CLOSED, "Close"):
         break
+    
     if event in ["0","1","2","3","4","5","6","7","8","9","."]:
         current_Number.append(event)
         num_string = "".join(current_Number)
