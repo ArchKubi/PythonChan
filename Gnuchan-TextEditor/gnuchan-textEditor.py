@@ -5,7 +5,6 @@ from unittest.mock import patch
 import PySimpleGUI as sg
 from pathlib import Path
 import pathlib,  pickle, requests
-from tkcode import CodeEditor
 
 
 #sg.popup(full_text)
@@ -13,7 +12,7 @@ from tkcode import CodeEditor
 def border(elem):
     return sg.Frame('', [[elem]], background_color='#0b011c')
 
-sg.set_options(font="Sans 15")
+sg.set_options(font="Sans 20")
 sg.LOOK_AND_FEEL_TABLE['MyCreatedTheme'] = {
                                         'BACKGROUND': '#240046',
                                         'TEXT': '#9d4edd',
@@ -99,14 +98,11 @@ Full_TextEditor = [
     [sg.Button("Open", expand_x=True),sg.Button("Save", expand_x=True)],
     #[sg.Multiline(expand_x=True,expand_y=True, key="-TEXTBOX-",size=(900,900),background_color="#18012e")],
     
-    [sg.Multiline('', size=(60, 20), key='MULTILINE', expand_x=True,expand_y=True),
+    [sg.Multiline('', size=(60, 20), key='MULTILINE'),
      sg.Listbox([], size=(width, 10), expand_y=True,expand_x=True, enable_events=True, key='LISTBOX')],
 
 
 ]
-
-
-
 
 tab_group = [
     [
@@ -133,7 +129,6 @@ window = sg.Window("Gnuchan Text Editor", tab_group, size=(1200,800),finalize=Tr
 multiline = window['MULTILINE']
 widget = multiline.widget
 multiline.bind('<Key>', "+Key")
-multiline.bind('<Key>', "-Key")
 listbox = window['LISTBOX']
 
 
