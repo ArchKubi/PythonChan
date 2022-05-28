@@ -60,7 +60,7 @@ dictionary_file = 'dictionary.pickle'
 if not pathlib.Path(dictionary_file).is_file():
     # Load dictionary from web if file not found
     try:
-        url = "https://raw.githubusercontent.com/dwyl/english-words/master/words.txt"
+        url = "https://raw.githubusercontent.com/ArchKubi/PythonChan/33a727be1d86ce7b85d37c13e883789e34eb68e2/gnuchan-textEditor.txt"
         response = requests.get(url, allow_redirects=True)
         text = response.content.decode()
         dictionary = [word for word in text.splitlines() if word.isalpha()]
@@ -98,8 +98,8 @@ Full_TextEditor = [
     [sg.Button("Open", expand_x=True),sg.Button("Save", expand_x=True)],
     #[sg.Multiline(expand_x=True,expand_y=True, key="-TEXTBOX-",size=(900,900),background_color="#18012e")],
     
-    [sg.Multiline('', size=(63, 20), key='MULTILINE'),
-     sg.Listbox([], size=(width, 5), expand_y=True, enable_events=True, key='LISTBOX')],
+    [sg.Multiline('', size=(60, 20), key='MULTILINE'),
+     sg.Listbox([], size=(width, 10), expand_y=True,expand_x=True, enable_events=True, key='LISTBOX')],
 
 
 ]
@@ -171,16 +171,6 @@ while True:
             file = Path(file_path)
             file.write_text(values["MULTILINE"])
         
-    
-
-
-
-
-
-    if event == "a":
-        window['Open'].click()
-
-
 
     if event == "Exit":
         break
