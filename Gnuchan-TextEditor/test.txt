@@ -1,0 +1,7 @@
+print()
+()
+{}
+[]
+if
+elif
+else:
