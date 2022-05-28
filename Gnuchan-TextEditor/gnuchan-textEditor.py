@@ -98,8 +98,10 @@ Full_TextEditor = [
     [sg.Button("Open", expand_x=True),sg.Button("Save", expand_x=True)],
     #[sg.Multiline(expand_x=True,expand_y=True, key="-TEXTBOX-",size=(900,900),background_color="#18012e")],
     
-    [sg.Multiline('', size=(60, 20), key='MULTILINE'),
-     sg.Listbox([], size=(width, 10), expand_y=True,expand_x=True, enable_events=True, key='LISTBOX')],
+    [
+    sg.Multiline('', size=(3, 20), expand_y=True),
+    sg.Multiline('', size=(60, 20), key='MULTILINE',expand_y=True),
+    sg.Listbox([], size=(width, 10), expand_y=True,expand_x=True, enable_events=True, key='LISTBOX')],
 
 
 ]
