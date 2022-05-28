@@ -1,7 +1,5 @@
-######################################
 import
 from
-######################################
 print
 if
 elif
@@ -20,19 +18,19 @@ return
 for
 While
 def
-##### list
+list
 append
 remove
 pop
 clear
 count
-#### Dictionaries
+dict
 popitem
 copy
 update
-#### Sets
+set
 add
 #remove - clear
-######################################
+
 
 
