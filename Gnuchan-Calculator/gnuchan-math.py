@@ -1,6 +1,7 @@
+# -*- coding:utf-8 -*-
 import imp
 import PySimpleGUI as sg
-import webbrowser
+import webbrowser,requests
 
 def border(elem):
     return sg.Frame('', [[elem]], background_color='#0b011c')
@@ -21,13 +22,16 @@ sg.LOOK_AND_FEEL_TABLE['MyCreatedTheme'] = {
 
 sg.theme("MyCreatedTheme")
 
+url = "https://i.ibb.co/jZzSq6Q/logo.png"
+response = requests.get(url, stream=True)
+response.raw.decode_content = True
 
 output_X = "Output"
 
 layout = [
     [   
         [sg.Text("Welcome to GnuChan Calculator", background_color="#19032e", expand_x=True,justification="center")],
-        [border(sg.Image(size=(500,500), filename="/home/archkubi/git/PythonChan/image/logo.png", expand_x=True, expand_y=True, background_color="#19032e"))],
+        [border(sg.Image(size=(500,500), data=response.raw.read(), expand_x=True, expand_y=True, background_color="#19032e"))],
         [sg.Text("GnuChan Math For You: "),sg.Text(output_X, justification="center", expand_x=True, key = "-TEXT-", background_color="#3d0275")],
         [sg.Button(4),sg.Button(5),sg.Button(6),sg.Button(7),sg.Button(8),sg.Button(9)],
         [sg.Button(0),sg.Button(1),sg.Button(2),sg.Button(3),sg.Button("."),sg.Button("My Website", expand_x=True)],

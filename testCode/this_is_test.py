@@ -1,8 +1,7 @@
-number1 = int(input("number1:> "))
-number2 = int(input("number2:> "))
-math = input("Math:>")
+number1 = 10
+number2 = 20
+number3 = 10
+math = (number1 + number2) + number3
 
-if math == "+":
-     print(number1 + number2)
-elif math == "-":
-     print(number1 - number2)
+if math > 30:
+	print("yeyyy")
