@@ -3,4 +3,6 @@ number2 = int(input("number2:> "))
 math = input("Math:>")
 
 if math == "+":
-	print(number1 + number2)
+     print(number1 + number2)
+elif math == "-":
+     print(number1 - number2)

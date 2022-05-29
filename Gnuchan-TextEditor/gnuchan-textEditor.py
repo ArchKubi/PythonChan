@@ -1,16 +1,20 @@
 from cmath import exp
 from importlib.resources import path
 from optparse import Values
+from platform import python_branch
 from unittest.mock import patch
 import PySimpleGUI as sg
 from pathlib import Path
 import pathlib,  pickle, requests
+import python_book, C_Book, welcome
 
 
 #sg.popup(full_text)
 
 def border(elem):
     return sg.Frame('', [[elem]], background_color='#0b011c')
+
+font_size = 20
 
 sg.set_options(font="Sans 20")
 sg.LOOK_AND_FEEL_TABLE['MyCreatedTheme'] = {
@@ -29,27 +33,11 @@ sg.theme("MyCreatedTheme")
 
 cheat = """
 burası kodlar için hile bölgesidir görmek için bir dosya aç
-
-
-
-
-
-
-
 """
 
-python = """ python """
-cLang  = """ c Lang """
-welcome = """
----------------------------------------------------------------------------------------------------
-
-
-
-
-
-
----------------------------------------------------------------------------------------------------
-"""
+python = python_book.txt
+cLang  = C_Book.Ctxt
+welcome = welcome.welcomeTXT
 
 
 
@@ -95,16 +83,23 @@ Default = [
 
 Full_TextEditor = [
     [sg.Text("Welcome to GnuChan Text Editor", background_color="#19032e", expand_x=True,justification="center")],
-    [sg.Button("Open", expand_x=True),sg.Button("Save", expand_x=True)],
+    [sg.Button("Open", expand_x=True),sg.Button("Save",expand_x=True)],
     #[sg.Multiline(expand_x=True,expand_y=True, key="-TEXTBOX-",size=(900,900),background_color="#18012e")],
     
     [
     sg.Multiline('', size=(3, 20), expand_y=True),
     sg.Multiline('', size=(60, 20), key='MULTILINE',expand_y=True),
     sg.Listbox([], size=(width, 10), expand_y=True,expand_x=True, enable_events=True, key='LISTBOX')],
-
-
 ]
+
+Full_TextEditor2 = [
+    [sg.Text("Welcome to GnuChan Text Editor", background_color="#19032e", expand_x=True,justification="center")],
+    [sg.Button("Open_Text", expand_x=True),sg.Button("Save_Text", expand_x=True)],
+    #[sg.Multiline(expand_x=True,expand_y=True, key="-TEXTBOX-",size=(900,900),background_color="#18012e")],
+    
+    [sg.Multiline('', size=(60, 20), key='MULTILINE2',expand_y=True,expand_x=True)],
+]
+
 
 tab_group = [
     [
@@ -113,6 +108,7 @@ tab_group = [
             [[
             sg.Tab("Default", Default),
             sg.Tab("Text Editor",Full_TextEditor),
+            sg.Tab("Text",Full_TextEditor2),
             sg.Button("Exit", expand_x=True),
             ]],
 
@@ -172,10 +168,19 @@ while True:
         if file_path:
             file = Path(file_path)
             file.write_text(values["MULTILINE"])
-    
-    if event == "p":
-        window["LISTBOX"].click()
-        print("test")
+
+    if event == "Open_Text":
+        file_path =  sg.popup_get_file("Open", no_window=True)
+        if file_path:
+            file = Path(file_path)
+            window["MULTILINE2"].update(file.read_text())
+
+    if event == "Save_Text":
+        file_path = sg.popup_get_file("Save", save_as=True, no_window=True)
+        if file_path:
+            file = Path(file_path)
+            file.write_text(values["MULTILINE2"])
+
         
 
     if event == "Exit":
