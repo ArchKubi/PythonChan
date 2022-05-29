@@ -1,3 +1,4 @@
+from cgitb import html
 from cmath import exp
 from importlib.resources import path
 from optparse import Values
@@ -6,7 +7,7 @@ from unittest.mock import patch
 import PySimpleGUI as sg
 from pathlib import Path
 import pathlib,  pickle, requests
-import python_book, C_Book, welcome
+import python_book, C_Book, htmlBook, welcome
 
 
 #sg.popup(full_text)
@@ -37,6 +38,7 @@ burası kodlar için hile bölgesidir görmek için bir dosya aç
 
 python = python_book.txt
 cLang  = C_Book.Ctxt
+htmlLang = htmlBook.htmTxt
 welcome = welcome.welcomeTXT
 
 
@@ -162,6 +164,8 @@ while True:
             window["-CHEAT-"].update(python)
         elif ".c" in file_path:
             window["-CHEAT-"].update(cLang)
+        elif ".html" in file_path:
+            window["-CHEAT-"].update(htmlLang)
 
     if event == "Save":
         file_path = sg.popup_get_file("Save", save_as=True, no_window=True)
