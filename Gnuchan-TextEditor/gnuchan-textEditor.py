@@ -158,9 +158,8 @@ def runCommand(cmd, timeout=None, window=None):
     return (retval, output)                     
 
 
-home = os.getcwd()
 GnuChan_Terminal = [
-    [sg.Text('This is GnuChan Terminal ---> ',font=font),sg.Text(home, font=font)],
+    [sg.Text('This is GnuChan Terminal ---> ',font=font)],
     [sg.Input(key='_IN_',font=font,background_color="#18012e",expand_x=True),sg.Button('Run',font=font)],
     [sg.Output(size=(60,15),font=font_code,expand_x=True,expand_y=True,background_color="#18012e")],
                 ]
