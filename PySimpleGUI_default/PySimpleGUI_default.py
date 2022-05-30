@@ -27,7 +27,7 @@ response.raw.decode_content = True
 sg.theme("MyCreatedTheme")
 
 layout = [
-        [sg.Text("Welcome to GnuChan Calculator", background_color="#19032e", expand_x=True,justification="center")],
+        [sg.Text("Welcome to GnuChan Calculator", expand_x=True,justification="center")],
         [border(sg.Image(size=(500,500), data=response.raw.read(), expand_x=True, expand_y=True, background_color="#19032e"))],
 
         ]

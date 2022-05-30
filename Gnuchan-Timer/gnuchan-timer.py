@@ -1,4 +1,3 @@
-import imp
 import PySimpleGUI as sg
 import webbrowser, requests
 from time import time
