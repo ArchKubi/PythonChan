@@ -113,7 +113,7 @@ width = max(map(len, dictionary))
 
 Full_TextEditor = [
     [sg.Button("Open", expand_x=True,font=font),sg.Button("Save",expand_x=True,font=font),sg.Button("Save As",expand_x=True,font=font)],
-    [sg.Multiline("",size=(5, 6),expand_x=True,expand_y=True,background_color="#18012e",font=font_code),
+    [sg.Multiline("",size=(5, 6),expand_x=True,expand_y=True,background_color="#18012e",font=font_code,no_scrollbar=True),
      sg.Multiline('', size=(85, 20), key='MULTILINE',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e"),
      sg.Listbox([], size=(7, 6), expand_y=True,expand_x=True,enable_events=True, key='LISTBOX',font=font,background_color="#18012e",no_scrollbar=True)
      

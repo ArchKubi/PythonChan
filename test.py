@@ -1,1 +1,2 @@
-print("this is just test brooo"
+number = 10
+print(f"this is just {number} test brooo"
