@@ -113,8 +113,9 @@ width = max(map(len, dictionary))
 
 Full_TextEditor = [
     [sg.Button("Open", expand_x=True,font=font),sg.Button("Save",expand_x=True,font=font),sg.Button("Save As",expand_x=True,font=font)],
-    [sg.Multiline('', size=(106, 20), key='MULTILINE',expand_y=True,expand_x=True,font=font_size_code,no_scrollbar=True,background_color="#18012e"),
-     sg.Listbox([], size=(10, 6), expand_y=True,expand_x=True,enable_events=True, key='LISTBOX',font=font,background_color="#18012e",no_scrollbar=True)
+    [sg.Multiline("",size=(5, 6),expand_x=True,expand_y=True,background_color="#18012e",font=font_code),
+     sg.Multiline('', size=(85, 20), key='MULTILINE',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e"),
+     sg.Listbox([], size=(7, 6), expand_y=True,expand_x=True,enable_events=True, key='LISTBOX',font=font,background_color="#18012e",no_scrollbar=True)
      
      ],
 ]
@@ -195,7 +196,9 @@ tab_group = [
             tab_background_color="#370666",
             selected_title_color="#c77dff",
             selected_background_color="#240046",
-            font=font
+            font=font,
+            key="Status"
+            
         ),
     ]
 ]
@@ -204,9 +207,11 @@ tab_group = [
 
 
 ####################################################################################
-window = sg.Window("Gnuchan Text Editor",tab_group,finalize=True,return_keyboard_events=True,size=(1280,900))
+window = sg.Window("Gnuchan Text Editor",tab_group,finalize=True,return_keyboard_events=True,resizable=True)
 window['_IN_'].bind("<Return>","_Enter")
-#window.maximize()
+window.bind('<Configure>', "Configure")
+status = window['Status']
+
 
 multiline = window['MULTILINE']
 widget = multiline.widget
