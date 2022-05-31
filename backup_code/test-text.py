@@ -205,23 +205,22 @@ tab_group = [
 
 
 ####################################################################################
-window = sg.Window("Gnuchan Text Editor", tab_group, size=(1200,800),finalize=True, return_keyboard_events=True)
+window = sg.Window("Gnuchan Text Editor",tab_group,finalize=True,return_keyboard_events=True,size=(1280,900))
 window['_IN_'].bind("<Return>","_Enter")
+#window.maximize()
+
 multiline = window['MULTILINE']
 widget = multiline.widget
 multiline.bind('<Key>', "+Key")
 listbox = window['LISTBOX']
+
 tab = sg.Text.char_width_in_pixels(font_code)*1      # 4 spaces for a Tab
 widget.configure(tabs=(tab,)) 
-####################################################################################
 
 lapse_amount = 0
 script_open = False
 txt_open = False
-
-
-
-
+####################################################################################
 
 
 
@@ -308,10 +307,3 @@ while True:
     if event == "Exit":
         break
 ####################################################################################
-
-
-
-
-
-    # output.insert('1.0',outputResult)
-    # output.insert('1.0',error)

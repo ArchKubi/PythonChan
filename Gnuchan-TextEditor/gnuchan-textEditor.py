@@ -16,10 +16,12 @@ def border(elem):
 font_size = 20
 font_size_code = 15
 font_bSize = 17
+font_output = 25
 
 font = ('Courier New', font_size)
 font_code = ('Courier New', font_size_code)
 font_bSizeFo = ('Courier New', font_bSize)
+font_bOutput = ('Courier New', font_output)
 
 sg.LOOK_AND_FEEL_TABLE['MyCreatedTheme'] = {
                                         'BACKGROUND': '#240046',
@@ -142,15 +144,12 @@ def runScript():
         window["OutputX"].update(outputResult)
 
 
-    # print('1.0 yeyyy',outputResult)
-    # print('1.0 error',error)
-
 
     
 pythonCodeRunner = [
     [sg.Text("Run Your Python Script", background_color="#19032e", expand_x=True,justification="center",font=font)],
     [sg.Button("Run Script", expand_x=True,font=font)],
-    [sg.Output(size=(60,15),font=font_size_code,expand_x=True,expand_y=True,background_color="#18012e",key="OutputX")],
+    [sg.Output(size=(60,15),font=font_bOutput,expand_x=True,expand_y=True,background_color="#18012e",key="OutputX")],
 ]
 ####################################################################################
 
@@ -205,23 +204,22 @@ tab_group = [
 
 
 ####################################################################################
-window = sg.Window("Gnuchan Text Editor", tab_group, size=(1200,800),finalize=True, return_keyboard_events=True)
+window = sg.Window("Gnuchan Text Editor",tab_group,finalize=True,return_keyboard_events=True,size=(1280,900))
 window['_IN_'].bind("<Return>","_Enter")
+#window.maximize()
+
 multiline = window['MULTILINE']
 widget = multiline.widget
 multiline.bind('<Key>', "+Key")
 listbox = window['LISTBOX']
+
 tab = sg.Text.char_width_in_pixels(font_code)*1      # 4 spaces for a Tab
 widget.configure(tabs=(tab,)) 
-####################################################################################
 
 lapse_amount = 0
 script_open = False
 txt_open = False
-
-
-
-
+####################################################################################
 
 
 
@@ -308,10 +306,3 @@ while True:
     if event == "Exit":
         break
 ####################################################################################
-
-
-
-
-
-    # output.insert('1.0',outputResult)
-    # output.insert('1.0',error)
