@@ -1,2 +1,4 @@
-number = 10
-print(f"this is just {number} test brooo"
+for f in range(100):
+	print(f)
+if f == 99:
+	print("yeyyy")

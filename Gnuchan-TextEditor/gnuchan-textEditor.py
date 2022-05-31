@@ -44,6 +44,13 @@ cheat = """
 this is language example place open file from text editor
 
 Python : Print("Hello F... World BRUH")
+don't use like this:
+while True:
+    print("fBom")
+not working editor freezes
+input() nope not working
+
+range works normal
 
 C : #include <stdio.h>
     int main(){
@@ -125,7 +132,7 @@ Full_TextEditor = [
 #### Text editor
 
 Full_TextEditor2 = [
-    [sg.Button("Open Text", expand_x=True,font=font),sg.Button("Save Text", expand_x=True,font=font),sg.Button("Save As Text", expand_x=True,font=font)],
+    [sg.Button("Open Text", expand_x=True,font=font),sg.Button("Save Text", expand_x=True,font=font),sg.Button("Save As Text", expand_x=True,font=font_code)],
     [sg.Multiline('', size=(60, 20), key='MULTILINE2',expand_y=True,expand_x=True,enable_events=True,font=font_code,background_color="#18012e")],
 ]
 ####################################################################################
@@ -158,7 +165,7 @@ pythonCodeRunner = [
 ####################################################################################
 #### Terminal
 def runCommand(cmd, timeout=None, window=None):
-    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     output = ''
     for line in p.stdout:
         line = line.decode(errors='replace' if (sys.version_info) < (3, 5) else 'backslashreplace').rstrip()
@@ -218,7 +225,13 @@ widget = multiline.widget
 multiline.bind('<Key>', "+Key")
 listbox = window['LISTBOX']
 
-tab = sg.Text.char_width_in_pixels(font_code)*1      # 4 spaces for a Tab
+text = window['MULTILINE'].Widget
+text.configure(undo=True)
+text.bind('<Control-Shift-Key-Z>', lambda event, text=text:redo(event, text))
+
+
+
+tab = sg.Text.char_width_in_pixels(font_code)*3
 widget.configure(tabs=(tab,)) 
 
 lapse_amount = 0
@@ -267,7 +280,7 @@ while True:
         elif ".html" in file_path:
             window["-CHEAT-"].update(htmlLang)
 
-    if event == "Save As" and script_open == False:
+    if event == "Save As":
         file_path = sg.popup_get_file("Save", save_as=True, no_window=True)
         if file_path:
             file = Path(file_path)
@@ -294,7 +307,7 @@ while True:
             pass
 
 
-    if event == "Save As Text" and txt_open == False:
+    if event == "Save As Text":
         file_path = sg.popup_get_file("Save", save_as=True, no_window=True)
         if file_path:
             file = Path(file_path)
@@ -310,4 +323,4 @@ while True:
 
     if event == "Exit":
         break
-####################################################################################
+####################################################################################1
