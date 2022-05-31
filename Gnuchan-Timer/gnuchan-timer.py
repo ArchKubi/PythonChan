@@ -38,10 +38,7 @@ def create_window():
 
         
 
-    return sg.Window(
-        "StopWatch",
-        layout,        
-    )
+    return sg.Window("StopWatch",   layout, )
 window = create_window()
 
 lapse_amount = 0

@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['gnuchan-math.py'],
+    ['Gnuchan-Calculator.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -28,7 +28,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='gnuchan-math',
+    name='Gnuchan-Calculator',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
