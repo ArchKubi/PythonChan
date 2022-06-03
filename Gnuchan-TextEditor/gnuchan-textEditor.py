@@ -14,7 +14,7 @@ def border(elem):
     return sg.Frame('', [[elem]], background_color='#0b011c')
 
 font_size = 20
-font_size_code = 15
+font_size_code = 13
 font_bSize = 17
 font_output = 25
 
@@ -85,11 +85,10 @@ Default = [
     ],
 
     [border(sg.Image(data=response.raw.read(), expand_x=True, expand_y=True, background_color="#19032e")),
-     sg.Text(welcome, expand_x=True,font=font)
-    
-    ], 
+     sg.Text(welcome, expand_x=True,font=font)], 
 
-    [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-CHEAT-",size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
+    [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-CHEAT-",
+	size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
 
         ]
 ####################################################################################
@@ -120,8 +119,8 @@ width = max(map(len, dictionary))
 
 Full_TextEditor = [
     [sg.Button("Open", expand_x=True,font=font),sg.Button("Save",expand_x=True,font=font),sg.Button("Save As",expand_x=True,font=font)],
-    [sg.Multiline("",size=(5, 6),expand_x=True,expand_y=True,background_color="#18012e",font=font_code,no_scrollbar=True),
-     sg.Multiline('', size=(85, 20), key='MULTILINE',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e"),
+    [sg.Multiline("",size=(2, 6),expand_x=True,expand_y=True,background_color="#18012e",font=font_code,no_scrollbar=True),
+     sg.Multiline('', size=(100, 20), key='MULTILINE',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e"),
      sg.Listbox([], size=(7, 6), expand_y=True,expand_x=True,enable_events=True, key='LISTBOX',font=font,background_color="#18012e",no_scrollbar=True)
      
      ],
@@ -143,6 +142,7 @@ Full_TextEditor2 = [
 def runScript():
 
     command = f'python {file}'
+
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True,universal_newlines=True)
     outputResult, error = process.communicate()
 
@@ -225,9 +225,14 @@ widget = multiline.widget
 multiline.bind('<Key>', "+Key")
 listbox = window['LISTBOX']
 
-text = window['MULTILINE'].Widget
+text,text2 = window['MULTILINE'].Widget , window['MULTILINE2'].Widget
 text.configure(undo=True)
 text.bind('<Control-Shift-Key-Z>', lambda event, text=text:redo(event, text))
+
+text2.configure(undo=True)
+text2.bind('<Control-Shift-Key-Z>', lambda event, text=text:redo(event, text))
+
+
 
 
 
