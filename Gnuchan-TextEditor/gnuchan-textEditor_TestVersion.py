@@ -5,8 +5,6 @@ import a0_Clang,a1_PythonLang,a2_Html,a3_GdSCript,welcome
 
 
 
-# text text  code code gdscript gdscript
-
 ####################################################################################
 #sg.popup(full_text)
 
@@ -45,7 +43,7 @@ this is language example place open file from text editor
 
 Python : Print("Hello F... World BRUH")
 -----------------------------------------
-don't use like this:
+don\'t use like this:
 while True:
     print("fBom")
 -----------------------------------------
@@ -66,7 +64,7 @@ C : #include <stdio.h>
 python = a1_PythonLang.txt
 cLang  = a0_Clang.Ctxt
 htmlLang = a2_Html.htmTxt
-welcome = welcome
+welcome = welcome.welcomeTXT
 gdScriptLang = a3_GdSCript
 ####################################################################################
 
@@ -368,6 +366,7 @@ while True:
             file = Path(file_path_Script)
             file.write_text(values["ScriptFile"])
             script_open = True
+            window["OpenScript"].update(file)
     if event == "Save" and script_open == True:
         if file_path_Script:
             file = Path(file_path_Script)
@@ -400,6 +399,7 @@ while True:
             fileText = Path(file_path_Text)
             fileText.write_text(values["TextFile"])
             txt_open = True
+            window["OpenText"].update(fileText)
 
 
 ## Text Edit
@@ -412,19 +412,21 @@ while True:
             GDScript_open = True
             window["OpenGDScript"].update(file_GDscript)
 
+    if event == "Save GDScript" and GDScript_open == True:
+        if file_path_GDScript:
+            file_GDscript = Path(file_path_GDScript)
+            file_GDscript.write_text(values["GDScript"])
+            
+        else:
+            pass
+
     if event == "Save As GDScript":
         file_path_GDScript = sg.popup_get_file("Save As GDScript", save_as=True, no_window=True)
         if file_path_GDScript:
             file_GDscript = Path(file_path_GDScript)
             file_GDscript.write_text(values["GDScript"])
             GDScript_open = True
-    if event == "Save GDScript" and GDScript_open == True:
-        if file_path_GDScript:
-            file_GDscript = Path(file_path_GDScript)
-            file_GDscript.write_text(values["GDScript"])
-        else:
-            pass
-
+            window["OpenGDScript"].update(file_GDscript)
 
 
 
