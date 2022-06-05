@@ -1,0 +1,5 @@
+GdScriptBook = """
+GdScript Book
+
+
+"""

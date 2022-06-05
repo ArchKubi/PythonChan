@@ -1,11 +1,11 @@
 import PySimpleGUI as sg
 from pathlib import Path
 import pathlib,  pickle, requests, subprocess, sys, os
-import python_book, C_Book, htmlBook, welcome
+import a0_Clang,a1_PythonLang,a2_Html,a3_GdSCript,welcome
 
 
 
-
+# text text  code code gdscript gdscript
 
 ####################################################################################
 #sg.popup(full_text)
@@ -61,10 +61,11 @@ C : #include <stdio.h>
 
 """
 
-python = python_book.txt
-cLang  = C_Book.Ctxt
-htmlLang = htmlBook.htmTxt
-welcome = welcome.welcomeTXT
+python = a1_PythonLang.txt
+cLang  = a0_Clang.Ctxt
+htmlLang = a2_Html.htmTxt
+welcome = welcome
+gdScriptLang = a3_GdSCript
 ####################################################################################
 
 ####################################################################################
@@ -105,13 +106,13 @@ htmlFile = False
 pro_url = ""
 
 if pythonFile == True:
-    "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/pythonFile.txt"
+    "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/complete_lang/pythonFile.txt"
 elif cFile == True:
-    pass
+    "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/complete_lang/cFile.txt"
 elif gdscriptFile == True:
-    pass
+    "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/complete_lang/htmlFile.txt"
 elif htmlFile == True:
-    pass
+    "https://github.com/ArchKubi/PythonChan/blob/main/Gnuchan-TextEditor/complete_lang/gdscriptFile.txt"
 
 dictionary_file = 'dictionary.pickle'
 if not pathlib.Path(dictionary_file).is_file():
@@ -131,7 +132,7 @@ else:
     with open(dictionary_file, 'rb') as f:
         dictionary = pickle.load(f)
 
-width = max(map(len, dictionary))
+width = max(map(len, dictionary_file))
 
 
 Full_TextEditor = [
@@ -355,7 +356,7 @@ while True:
             window["-CHEAT-"].update(htmlLang)
             htmlFile = True
         elif ".gd" in file_path_Script:
-            window["-CHEAT-"].update(htmlLang)
+            window["-CHEAT-"].update(gdScriptLang)
             gdscriptFile = True
 
 
@@ -381,6 +382,7 @@ while True:
             window["TextFile"].update(fileText.read_text())
             txt_open = True
             window["OpenText"].update(fileText)
+            
 
     if event == "Save Text" and txt_open == True:
         if file_path_Text:

@@ -1,11 +1,11 @@
 import PySimpleGUI as sg
 from pathlib import Path
 import pathlib,  pickle, requests, subprocess, sys, os
-import python_book, C_Book, htmlBook, welcome
+import a0_Clang,a1_PythonLang,a2_Html,a3_GdSCript,welcome
 
 
 
-
+# text text  code code gdscript gdscript
 
 ####################################################################################
 #sg.popup(full_text)
@@ -61,10 +61,11 @@ C : #include <stdio.h>
 
 """
 
-python = python_book.txt
-cLang  = C_Book.Ctxt
-htmlLang = htmlBook.htmTxt
-welcome = welcome.welcomeTXT
+python = a1_PythonLang.txt
+cLang  = a0_Clang.Ctxt
+htmlLang = a2_Html.htmTxt
+welcome = welcome
+gdScriptLang = a3_GdSCript
 ####################################################################################
 
 ####################################################################################
@@ -96,11 +97,28 @@ Default = [
 
 ####################################################################################
 #### code editor 
+
+pythonFile = False
+cFile = False
+gdscriptFile = False
+htmlFile = False
+
+pro_url = ""
+
+if pythonFile == True:
+    "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/complete_lang/pythonFile.txt"
+elif cFile == True:
+    "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/complete_lang/cFile.txt"
+elif gdscriptFile == True:
+    "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/complete_lang/htmlFile.txt"
+elif htmlFile == True:
+    "https://github.com/ArchKubi/PythonChan/blob/main/Gnuchan-TextEditor/complete_lang/gdscriptFile.txt"
+
 dictionary_file = 'dictionary.pickle'
 if not pathlib.Path(dictionary_file).is_file():
     # Load dictionary from web if file not found
     try:
-        url = "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/python.txt"
+        url = pro_url
         response = requests.get(url, allow_redirects=True)
         text = response.content.decode()
         dictionary = [word for word in text.splitlines() if word.isalpha()]
@@ -114,7 +132,7 @@ else:
     with open(dictionary_file, 'rb') as f:
         dictionary = pickle.load(f)
 
-width = max(map(len, dictionary))
+width = max(map(len, dictionary_file))
 
 
 Full_TextEditor = [
@@ -190,7 +208,9 @@ GnuChan_Terminal = [
 Full_GDScript = [
     [sg.Text("Open GDScript",font=font,key="OpenGDScript")],
     [sg.Button("Open GDScript", expand_x=True,font=font),sg.Button("Save GDScript", expand_x=True,font=font),sg.Button("Save As GDScript", expand_x=True,font=font)],
-    [sg.Multiline('', size=(100, 20), key='GDScript',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e"),
+    [sg.Multiline('', size=(100, 20), key='GDScript',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e",),
+    sg.Listbox([], size=(7, 6), expand_y=True,expand_x=True,enable_events=True, key='GDScriptList',font=font,background_color="#18012e",no_scrollbar=True)
+
     ]
 
 ]
@@ -290,7 +310,29 @@ while True:
         widget.insert("insert", items[0])
         ScriptList.update([])
         ScriptFile.set_focus()
-        
+
+
+
+    elif event == 'ScriptFile+Key':
+        entry = widget.get("insert-1c wordstart", "insert")
+        if entry:
+            words = [word for word in dictionary if word.startswith(entry)]
+        else:
+            words = []
+        ScriptList.update(words)
+
+    elif event == 'ScriptList':
+        items = values[event]
+        if not items:
+            continue
+        widget.delete("insert-1c wordstart", "insert")
+        widget.insert("insert", items[0])
+        ScriptList.update([])
+        ScriptFile.set_focus()
+
+
+
+
 ## Script Edit
 
     if event == "Open":
@@ -300,13 +342,23 @@ while True:
             window["ScriptFile"].update(file.read_text())
             script_open = True
             window["OpenScript"].update(file)
+            
+
 
         if ".py" in file_path_Script:
             window["-CHEAT-"].update(python)
+            pythonFile = True
+
         elif ".c" in file_path_Script:
             window["-CHEAT-"].update(cLang)
+            cFile = True
         elif ".html" in file_path_Script:
             window["-CHEAT-"].update(htmlLang)
+            htmlFile = True
+        elif ".gd" in file_path_Script:
+            window["-CHEAT-"].update(gdScriptLang)
+            gdscriptFile = True
+
 
     if event == "Save As":
         file_path_Script = sg.popup_get_file("Save", save_as=True, no_window=True)
@@ -330,6 +382,7 @@ while True:
             window["TextFile"].update(fileText.read_text())
             txt_open = True
             window["OpenText"].update(fileText)
+            
 
     if event == "Save Text" and txt_open == True:
         if file_path_Text:
