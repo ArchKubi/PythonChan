@@ -44,9 +44,11 @@ cheat = """
 this is language example place open file from text editor
 
 Python : Print("Hello F... World BRUH")
+-----------------------------------------
 don't use like this:
 while True:
     print("fBom")
+-----------------------------------------
 not working editor freezes
 input() nope not working
 
