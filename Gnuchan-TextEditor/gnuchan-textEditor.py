@@ -77,7 +77,6 @@ response.raw.decode_content = True
 ####################################################################################
 #### starting screen
 Default = [
-
     [sg.Text("Welcome to GnuChan Text Editor", background_color="#19032e", expand_x=True,justification="center",font=font),
      sg.Button("My Website", expand_x=True,font=font),
      sg.Button("My itch.io", expand_x=True,font=font)
@@ -85,10 +84,11 @@ Default = [
     ],
 
     [border(sg.Image(data=response.raw.read(), expand_x=True, expand_y=True, background_color="#19032e")),
-     sg.Text(welcome, expand_x=True,font=font)], 
+     sg.Text(welcome, expand_x=True,font=font)
+    
+    ], 
 
-    [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-CHEAT-",
-	size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
+    [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-CHEAT-",size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
 
         ]
 ####################################################################################
@@ -118,10 +118,11 @@ width = max(map(len, dictionary))
 
 
 Full_TextEditor = [
+    [sg.Text("Open File",font=font,key="OpenScript")],
     [sg.Button("Open", expand_x=True,font=font),sg.Button("Save",expand_x=True,font=font),sg.Button("Save As",expand_x=True,font=font)],
     [sg.Multiline("",size=(2, 6),expand_x=True,expand_y=True,background_color="#18012e",font=font_code,no_scrollbar=True),
-     sg.Multiline('', size=(100, 20), key='MULTILINE',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e"),
-     sg.Listbox([], size=(7, 6), expand_y=True,expand_x=True,enable_events=True, key='LISTBOX',font=font,background_color="#18012e",no_scrollbar=True)
+     sg.Multiline('', size=(100, 20), key='ScriptFile',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e"),
+     sg.Listbox([], size=(7, 6), expand_y=True,expand_x=True,enable_events=True, key='ScriptList',font=font,background_color="#18012e",no_scrollbar=True)
      
      ],
 ]
@@ -131,8 +132,9 @@ Full_TextEditor = [
 #### Text editor
 
 Full_TextEditor2 = [
-    [sg.Button("Open Text", expand_x=True,font=font),sg.Button("Save Text", expand_x=True,font=font),sg.Button("Save As Text", expand_x=True,font=font_code)],
-    [sg.Multiline('', size=(60, 20), key='MULTILINE2',expand_y=True,expand_x=True,enable_events=True,font=font_code,background_color="#18012e")],
+    [sg.Text("Open File",font=font,key="OpenText")],
+    [sg.Button("Open Text", expand_x=True,font=font),sg.Button("Save Text", expand_x=True,font=font),sg.Button("Save As Text", expand_x=True,font=font)],
+    [sg.Multiline('', size=(60, 20), key='TextFile',expand_y=True,expand_x=True,enable_events=True,font=font_code,background_color="#18012e")],
 ]
 ####################################################################################
 
@@ -142,7 +144,6 @@ Full_TextEditor2 = [
 def runScript():
 
     command = f'python {file}'
-
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True,universal_newlines=True)
     outputResult, error = process.communicate()
 
@@ -183,6 +184,20 @@ GnuChan_Terminal = [
                 ]
 ####################################################################################
 
+####################################################################################
+#### Text editor
+
+Full_GDScript = [
+    [sg.Text("Open GDScript",font=font,key="OpenGDScript")],
+    [sg.Button("Open GDScript", expand_x=True,font=font),sg.Button("Save GDScript", expand_x=True,font=font),sg.Button("Save As GDScript", expand_x=True,font=font)],
+    [sg.Multiline('', size=(100, 20), key='GDScript',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e"),
+    ]
+
+]
+####################################################################################
+
+
+
 
 ####################################################################################
 tab_group = [
@@ -191,10 +206,11 @@ tab_group = [
         (
             [[
             sg.Tab("Default", Default),
+            sg.Tab("Terminal",GnuChan_Terminal),
             sg.Tab("Text",Full_TextEditor2),
-            sg.Tab("Code Editor",Full_TextEditor),
-            sg.Tab("Python Code Runner",pythonCodeRunner),
-            sg.Tab("GnuChan Terminal",GnuChan_Terminal),
+            sg.Tab("Code",Full_TextEditor),
+            sg.Tab("Python Run",pythonCodeRunner),
+            sg.Tab("GDScript", Full_GDScript),
             sg.Button("Exit", expand_x=True,font=font),
             ]],
 
@@ -220,18 +236,21 @@ window.bind('<Configure>', "Configure")
 status = window['Status']
 
 
-multiline = window['MULTILINE']
-widget = multiline.widget
-multiline.bind('<Key>', "+Key")
-listbox = window['LISTBOX']
+ScriptFile = window['ScriptFile']
+widget = ScriptFile.widget
+ScriptFile.bind('<Key>', "+Key")
+ScriptList = window['ScriptList']
 
-text,text2 = window['MULTILINE'].Widget , window['MULTILINE2'].Widget
+text,text2 = window['ScriptFile'].Widget , window['TextFile'].Widget
 text.configure(undo=True)
 text.bind('<Control-Shift-Key-Z>', lambda event, text=text:redo(event, text))
 
 text2.configure(undo=True)
 text2.bind('<Control-Shift-Key-Z>', lambda event, text=text:redo(event, text))
 
+gdscriptX_ = window["GDScript"].Widget
+gdscriptX_.configure(undo=True)
+gdscriptX_.bind('<Control-Shift-Key-Z>', lambda event, text=text:redo(event, text))
 
 
 
@@ -242,6 +261,7 @@ widget.configure(tabs=(tab,))
 lapse_amount = 0
 script_open = False
 txt_open = False
+GDScript_open = False
 ####################################################################################
 
 
@@ -252,73 +272,110 @@ while True:
     if event == sg.WIN_CLOSED:
         break
 
-    elif event == 'MULTILINE+Key':
+## AutoComplete Not Finish
+
+    elif event == 'ScriptFile+Key':
         entry = widget.get("insert-1c wordstart", "insert")
         if entry:
             words = [word for word in dictionary if word.startswith(entry)]
         else:
             words = []
-        listbox.update(words)
+        ScriptList.update(words)
 
-    elif event == 'LISTBOX':
+    elif event == 'ScriptList':
         items = values[event]
         if not items:
             continue
         widget.delete("insert-1c wordstart", "insert")
         widget.insert("insert", items[0])
-        listbox.update([])
-        multiline.set_focus()
+        ScriptList.update([])
+        ScriptFile.set_focus()
         
-
+## Script Edit
 
     if event == "Open":
-        file_path =  sg.popup_get_file("Open", no_window=True)
-        if file_path:
-            file = Path(file_path)
-            window["MULTILINE"].update(file.read_text())
+        file_path_Script =  sg.popup_get_file("Open", no_window=True)
+        if file_path_Script:
+            file = Path(file_path_Script)
+            window["ScriptFile"].update(file.read_text())
             script_open = True
+            window["OpenScript"].update(file)
 
-        if ".py" in file_path:
+        if ".py" in file_path_Script:
             window["-CHEAT-"].update(python)
-        elif ".c" in file_path:
+        elif ".c" in file_path_Script:
             window["-CHEAT-"].update(cLang)
-        elif ".html" in file_path:
+        elif ".html" in file_path_Script:
             window["-CHEAT-"].update(htmlLang)
 
     if event == "Save As":
-        file_path = sg.popup_get_file("Save", save_as=True, no_window=True)
-        if file_path:
-            file = Path(file_path)
-            file.write_text(values["MULTILINE"])
+        file_path_Script = sg.popup_get_file("Save", save_as=True, no_window=True)
+        if file_path_Script:
+            file = Path(file_path_Script)
+            file.write_text(values["ScriptFile"])
             script_open = True
     if event == "Save" and script_open == True:
-        if file_path:
-            file = Path(file_path)
-            file.write_text(values["MULTILINE"])
+        if file_path_Script:
+            file = Path(file_path_Script)
+            file.write_text(values["ScriptFile"])
         else:
             pass
 
+## Text Edit
+
     if event == "Open Text":
-        file_path =  sg.popup_get_file("Open", no_window=True)
-        if file_path:
-            file = Path(file_path)
-            window["MULTILINE2"].update(file.read_text())
+        file_path_Text =  sg.popup_get_file("Open Text", no_window=True)
+        if file_path_Text:
+            fileText = Path(file_path_Text)
+            window["TextFile"].update(fileText.read_text())
             txt_open = True
+            window["OpenText"].update(fileText)
 
     if event == "Save Text" and txt_open == True:
-        if file_path:
-            file = Path(file_path)
-            file.write_text(values["MULTILINE2"])
+        if file_path_Text:
+            fileText = Path(file_path_Text)
+            fileText.write_text(values["TextFile"])
         else:
             pass
 
 
     if event == "Save As Text":
-        file_path = sg.popup_get_file("Save", save_as=True, no_window=True)
-        if file_path:
-            file = Path(file_path)
-            file.write_text(values["MULTILINE2"])
+        file_path_Text = sg.popup_get_file("Save As Text", save_as=True, no_window=True)
+        if file_path_Text:
+            fileText = Path(file_path_Text)
+            fileText.write_text(values["TextFile"])
             txt_open = True
+
+
+## Text Edit
+
+    if event == "Open GDScript":
+        file_path_GDScript =  sg.popup_get_file("Open GDScript", no_window=True)
+        if file_path_GDScript:
+            file_GDscript = Path(file_path_GDScript)
+            window["GDScript"].update(file_GDscript.read_text())
+            GDScript_open = True
+            window["OpenGDScript"].update(file_GDscript)
+
+    if event == "Save As GDScript":
+        file_path_GDScript = sg.popup_get_file("Save As GDScript", save_as=True, no_window=True)
+        if file_path_GDScript:
+            file_GDscript = Path(file_path_GDScript)
+            file_GDscript.write_text(values["GDScript"])
+            GDScript_open = True
+    if event == "Save GDScript" and GDScript_open == True:
+        if file_path_GDScript:
+            file_GDscript = Path(file_path_GDScript)
+            file_GDscript.write_text(values["GDScript"])
+        else:
+            pass
+
+
+
+
+
+## Extra
+
 
     if event == 'Run Script' and script_open == True:
         runScript()
@@ -330,4 +387,4 @@ while True:
 
     if event == "Exit":
         break
-####################################################################################1
+####################################################################################
