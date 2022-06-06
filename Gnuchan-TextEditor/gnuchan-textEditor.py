@@ -98,22 +98,6 @@ Default = [
 ####################################################################################
 #### code editor 
 
-pythonFile = False
-cFile = False
-gdscriptFile = False
-htmlFile = False
-
-pro_url = ""
-
-if pythonFile == True:
-    "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/complete_lang/pythonFile.txt"
-elif cFile == True:
-    "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/complete_lang/cFile.txt"
-elif gdscriptFile == True:
-    "https://raw.githubusercontent.com/ArchKubi/PythonChan/main/Gnuchan-TextEditor/complete_lang/htmlFile.txt"
-elif htmlFile == True:
-    "https://github.com/ArchKubi/PythonChan/blob/main/Gnuchan-TextEditor/complete_lang/gdscriptFile.txt"
-
 dictionary_file = 'dictionary.pickle'
 if not pathlib.Path(dictionary_file).is_file():
     # Load dictionary from web if file not found
@@ -138,11 +122,7 @@ width = max(map(len, dictionary_file))
 Full_TextEditor = [
     [sg.Text("Open File",font=font,key="OpenScript")],
     [sg.Button("Open", expand_x=True,font=font),sg.Button("Save",expand_x=True,font=font),sg.Button("Save As",expand_x=True,font=font)],
-    [sg.Multiline("",size=(2, 6),expand_x=True,expand_y=True,background_color="#18012e",font=font_code,no_scrollbar=True),
-     sg.Multiline('', size=(100, 20), key='ScriptFile',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e"),
-     sg.Listbox([], size=(7, 6), expand_y=True,expand_x=True,enable_events=True, key='ScriptList',font=font,background_color="#18012e",no_scrollbar=True)
-     
-     ],
+    [sg.Multiline('', size=(100, 20), key='ScriptFile',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e")],
 ]
 ####################################################################################
 
@@ -202,22 +182,6 @@ GnuChan_Terminal = [
                 ]
 ####################################################################################
 
-####################################################################################
-#### Text editor
-
-Full_GDScript = [
-    [sg.Text("Open GDScript",font=font,key="OpenGDScript")],
-    [sg.Button("Open GDScript", expand_x=True,font=font),sg.Button("Save GDScript", expand_x=True,font=font),sg.Button("Save As GDScript", expand_x=True,font=font)],
-    [sg.Multiline('', size=(100, 20), key='GDScript',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e",),
-    sg.Listbox([], size=(7, 6), expand_y=True,expand_x=True,enable_events=True, key='GDScriptList',font=font,background_color="#18012e",no_scrollbar=True)
-
-    ]
-
-]
-####################################################################################
-
-
-
 
 ####################################################################################
 tab_group = [
@@ -230,7 +194,6 @@ tab_group = [
             sg.Tab("Text",Full_TextEditor2),
             sg.Tab("Code",Full_TextEditor),
             sg.Tab("Python Run",pythonCodeRunner),
-            sg.Tab("GDScript", Full_GDScript),
             sg.Button("Exit", expand_x=True,font=font),
             ]],
 
@@ -259,7 +222,6 @@ status = window['Status']
 ScriptFile = window['ScriptFile']
 widget = ScriptFile.widget
 ScriptFile.bind('<Key>', "+Key")
-ScriptList = window['ScriptList']
 
 text,text2 = window['ScriptFile'].Widget , window['TextFile'].Widget
 text.configure(undo=True)
@@ -268,9 +230,7 @@ text.bind('<Control-Shift-Key-Z>', lambda event, text=text:redo(event, text))
 text2.configure(undo=True)
 text2.bind('<Control-Shift-Key-Z>', lambda event, text=text:redo(event, text))
 
-gdscriptX_ = window["GDScript"].Widget
-gdscriptX_.configure(undo=True)
-gdscriptX_.bind('<Control-Shift-Key-Z>', lambda event, text=text:redo(event, text))
+
 
 
 
@@ -291,47 +251,6 @@ while True:
     event, values = window.Read()
     if event == sg.WIN_CLOSED:
         break
-
-## AutoComplete Not Finish
-
-    elif event == 'ScriptFile+Key':
-        entry = widget.get("insert-1c wordstart", "insert")
-        if entry:
-            words = [word for word in dictionary if word.startswith(entry)]
-        else:
-            words = []
-        ScriptList.update(words)
-
-    elif event == 'ScriptList':
-        items = values[event]
-        if not items:
-            continue
-        widget.delete("insert-1c wordstart", "insert")
-        widget.insert("insert", items[0])
-        ScriptList.update([])
-        ScriptFile.set_focus()
-
-
-
-    elif event == 'ScriptFile+Key':
-        entry = widget.get("insert-1c wordstart", "insert")
-        if entry:
-            words = [word for word in dictionary if word.startswith(entry)]
-        else:
-            words = []
-        ScriptList.update(words)
-
-    elif event == 'ScriptList':
-        items = values[event]
-        if not items:
-            continue
-        widget.delete("insert-1c wordstart", "insert")
-        widget.insert("insert", items[0])
-        ScriptList.update([])
-        ScriptFile.set_focus()
-
-
-
 
 ## Script Edit
 
