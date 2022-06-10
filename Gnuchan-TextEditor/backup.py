@@ -12,7 +12,7 @@ def border(elem):
     return sg.Frame('', [[elem]], background_color='#0b011c')
 
 font_size = 20
-font_size_code = 13
+font_size_code = 11
 font_bSize = 17
 font_output = 25
 
@@ -94,38 +94,6 @@ Default = [
         ]
 ####################################################################################
 
-
-####################################################################################
-#### code editor 
-
-dictionary_file = 'dictionary.pickle'
-if not pathlib.Path(dictionary_file).is_file():
-    # Load dictionary from web if file not found
-    try:
-        url = pro_url
-        response = requests.get(url, allow_redirects=True)
-        text = response.content.decode()
-        dictionary = [word for word in text.splitlines() if word.isalpha()]
-        # Save dictionary to file
-        with open(dictionary_file, 'wb') as f:
-            pickle.dump(dictionary, f)
-    except:
-        words = None
-else:
-    # Load dictionary from file
-    with open(dictionary_file, 'rb') as f:
-        dictionary = pickle.load(f)
-
-width = max(map(len, dictionary_file))
-
-
-Full_TextEditor = [
-    [sg.Text("Open File",font=font,key="OpenScript")],
-    [sg.Button("Open", expand_x=True,font=font),sg.Button("Save",expand_x=True,font=font),sg.Button("Save As",expand_x=True,font=font)],
-    [sg.Multiline('', size=(100, 20), key='ScriptFile',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e")],
-]
-####################################################################################
-
 ####################################################################################
 #### Text editor
 
@@ -133,6 +101,33 @@ Full_TextEditor2 = [
     [sg.Text("Open File",font=font,key="OpenText")],
     [sg.Button("Open Text", expand_x=True,font=font),sg.Button("Save Text", expand_x=True,font=font),sg.Button("Save As Text", expand_x=True,font=font)],
     [sg.Multiline('', size=(60, 20), key='TextFile',expand_y=True,expand_x=True,enable_events=True,font=font_code,background_color="#18012e")],
+]
+####################################################################################
+
+####################################################################################
+#### code editor 
+
+Full_Script = [
+    [sg.Text("Open Tab1",font=font,key="OpenScript")],
+    [sg.Button("Open Tab1", expand_x=True,font=font),sg.Button("Save Tab1",expand_x=True,font=font),sg.Button("Save As Tab1",expand_x=True,font=font)],
+    [sg.Multiline('', size=(100, 40), key='ScriptFile',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e")],
+]
+####################################################################################
+
+####################################################################################
+#### code editor 2
+
+Full_Script2 = [
+    [sg.Text("Open File Tab2",font=font,key="OpenScript2")],
+    [sg.Button("Open Tab2", expand_x=True,font=font),sg.Button("Save Tab2",expand_x=True,font=font),sg.Button("Save As Tab2",expand_x=True,font=font)],
+    [sg.Multiline('', size=(100, 40), key='ScriptFile2',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e")],
+]
+####################################################################################
+
+Full_Script3 = [
+    [sg.Text("Open File Tab3",font=font,key="OpenScript3")],
+    [sg.Button("Open Tab3", expand_x=True,font=font),sg.Button("Save Tab3",expand_x=True,font=font),sg.Button("Save As Tab3",expand_x=True,font=font)],
+    [sg.Multiline('', size=(100, 40), key='ScriptFile3',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e")],
 ]
 ####################################################################################
 
@@ -183,6 +178,31 @@ GnuChan_Terminal = [
 ####################################################################################
 
 
+tab_Script = [
+    [
+            sg.TabGroup
+        (
+            [[
+            sg.Tab("CTab1",Full_Script),
+            sg.Tab("CTab2",Full_Script2),
+            sg.Tab("CTab3",Full_Script3),
+            sg.Tab("Python Run",pythonCodeRunner),
+            ]],
+
+            tab_location="center",
+            title_color="#9d4edd",
+            tab_background_color="#370666",
+            selected_title_color="#c77dff",
+            selected_background_color="#240046",
+            font=font,
+            key="Status"
+            
+        ),
+    ]
+]
+
+
+
 ####################################################################################
 tab_group = [
     [
@@ -192,8 +212,7 @@ tab_group = [
             sg.Tab("Default", Default),
             sg.Tab("Terminal",GnuChan_Terminal),
             sg.Tab("Text",Full_TextEditor2),
-            sg.Tab("Code",Full_TextEditor),
-            sg.Tab("Python Run",pythonCodeRunner),
+            sg.Tab("Script",tab_Script),
             sg.Button("Exit", expand_x=True,font=font),
             ]],
 
@@ -208,6 +227,9 @@ tab_group = [
         ),
     ]
 ]
+
+
+
 ####################################################################################
 
 
@@ -235,7 +257,7 @@ text2.bind('<Control-Shift-Key-Z>', lambda event, text=text:redo(event, text))
 
 
 
-tab = sg.Text.char_width_in_pixels(font_code)*3
+tab = sg.Text.char_width_in_pixels(font_code)*4
 widget.configure(tabs=(tab,)) 
 
 lapse_amount = 0
@@ -254,7 +276,7 @@ while True:
 
 ## Script Edit
 
-    if event == "Open":
+    if event == "Open Tab1":
         file_path_Script =  sg.popup_get_file("Open", no_window=True)
         if file_path_Script:
             file = Path(file_path_Script)
@@ -266,32 +288,87 @@ while True:
 
         if ".py" in file_path_Script:
             window["-CHEAT-"].update(python)
-            pythonFile = True
 
         elif ".c" in file_path_Script:
             window["-CHEAT-"].update(cLang)
-            cFile = True
         elif ".html" in file_path_Script:
             window["-CHEAT-"].update(htmlLang)
-            htmlFile = True
         elif ".gd" in file_path_Script:
             window["-CHEAT-"].update(gdScriptLang)
-            gdscriptFile = True
 
-
-    if event == "Save As":
-        file_path_Script = sg.popup_get_file("Save", save_as=True, no_window=True)
-        if file_path_Script:
-            file = Path(file_path_Script)
-            file.write_text(values["ScriptFile"])
-            script_open = True
-            window["OpenScript"].update(file)
-    if event == "Save" and script_open == True:
+    if event == "Save Tab1" and script_open == True:
         if file_path_Script:
             file = Path(file_path_Script)
             file.write_text(values["ScriptFile"])
         else:
             pass
+
+    if event == "Save As Tab1":
+        file_path_Script = sg.popup_get_file("Save Tab1", save_as=True, no_window=True)
+        if file_path_Script:
+            file = Path(file_path_Script)
+            file.write_text(values["ScriptFile"])
+            script_open = True
+            window["OpenScript"].update(file)
+
+
+
+## Script Edit
+
+    if event == "Open Tab2":
+        file_path_Script2 =  sg.popup_get_file("Open Tab2", no_window=True)
+        if file_path_Script2 :
+            file2 = Path(file_path_Script2 )
+            window["ScriptFile2"].update(file2.read_text())
+            script_open = True
+            window["OpenScript2"].update(file2)
+
+    if event == "Save Tab2" and script_open == True:
+        if file_path_Script2 :
+            file2 = Path(file_path_Script2 )
+            file2.write_text(values["ScriptFile2"])
+        else:
+            pass
+
+    if event == "Save As Tab2":
+        file_path_Script2  = sg.popup_get_file("Save Tab2", save_as=True, no_window=True)
+        if file_path_Script2 :
+            file2 = Path(file_path_Script2 )
+            file2.write_text(values["ScriptFile2"])
+            script_open = True
+            window["OpenScript2"].update(file2)
+
+
+## Script Edit
+
+    if event == "Open Tab3":
+        file_path_Script3 =  sg.popup_get_file("Open Tab3", no_window=True)
+        if file_path_Script3 :
+            file3 = Path(file_path_Script3 )
+            window["ScriptFile3"].update(file3.read_text())
+            script_open = True
+            window["OpenScript3"].update(file3)
+
+    if event == "Save Tab3" and script_open == True:
+        if file_path_Script3 :
+            file3 = Path(file_path_Script3 )
+            file3.write_text(values["ScriptFile3"])
+        else:
+            pass
+
+    if event == "Save As Tab3":
+        file_path_Script3  = sg.popup_get_file("Save Tab3", save_as=True, no_window=True)
+        if file_path_Script3 :
+            file3 = Path(file_path_Script3 )
+            file3.write_text(values["ScriptFile3"])
+            script_open = True
+            window["OpenScript3"].update(file3)
+
+
+
+
+
+
 
 ## Text Edit
 
