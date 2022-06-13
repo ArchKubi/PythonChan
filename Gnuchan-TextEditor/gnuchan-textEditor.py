@@ -6,12 +6,11 @@ import a0_Clang,a1_PythonLang,a2_Html,a3_GdSCript,welcome
 
 
 ####################################################################################
-#sg.popup(full_text)
 
 def border(elem):
     return sg.Frame('', [[elem]], background_color='#0b011c')
 
-font_size = 20
+font_size = 15
 font_size_code = 11
 font_bSize = 17
 font_output = 25
@@ -89,7 +88,7 @@ Default = [
     
     ], 
 
-    #[sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-CHEAT-",size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
+    [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-CHEAT-",size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
 
         ]
 ####################################################################################
@@ -110,24 +109,16 @@ Full_TextEditor2 = [
 #### code editor 
 
 
-
 Full_Script = [
     [sg.Text("Open Tab1",font=font,key="OpenScript")],
     [sg.Button("Open Tab1", expand_x=True,font=font),sg.Button("Save Tab1",expand_x=True,font=font),sg.Button("Save As Tab1",expand_x=True,font=font)],
     [sg.Multiline('', size=(100, 40), key='ScriptFile',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e")],
 ]
-script1_tab_code = [
-        [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-ScriptTab1-",size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
-]
-
 
 Full_Script2 = [
     [sg.Text("Open File Tab2",font=font,key="OpenScript2")],
     [sg.Button("Open Tab2", expand_x=True,font=font),sg.Button("Save Tab2",expand_x=True,font=font),sg.Button("Save As Tab2",expand_x=True,font=font)],
     [sg.Multiline('', size=(100, 40), key='ScriptFile2',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e")],
-]
-script2_tab_code = [
-        [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-ScriptTab2-",size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
 ]
 
 Full_Script3 = [
@@ -135,16 +126,11 @@ Full_Script3 = [
     [sg.Button("Open Tab3", expand_x=True,font=font),sg.Button("Save Tab3",expand_x=True,font=font),sg.Button("Save As Tab3",expand_x=True,font=font)],
     [sg.Multiline('', size=(100, 40), key='ScriptFile3',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e")],
 ]
-script3_tab_code = [
-        [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-ScriptTab3-",size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
-]
+
 Full_Script4 = [
     [sg.Text("Open File Tab4",font=font,key="OpenScript4")],
     [sg.Button("Open Tab4", expand_x=True,font=font),sg.Button("Save Tab4",expand_x=True,font=font),sg.Button("Save As Tab4",expand_x=True,font=font)],
     [sg.Multiline('', size=(100, 40), key='ScriptFile4',expand_y=True,expand_x=True,font=font_code,no_scrollbar=True,background_color="#18012e")],
-]
-script4_tab_code = [
-        [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-ScriptTab4-",size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
 ]
 ####################################################################################
 
@@ -212,100 +198,15 @@ GnuChan_Terminal = [
 
 
 
-
-
-
-
-Full_Script1_tab = [
-    [
-            sg.TabGroup
-        (
-            [[
-            sg.Tab("Code", Full_Script),
-            sg.Tab("Langueage Note",script1_tab_code),
-            ]],
-
-            tab_location="center",
-            title_color="#9d4edd",
-            tab_background_color="#370666",
-            selected_title_color="#c77dff",
-            selected_background_color="#240046",
-            font=font,
-            key="Status"
-            
-        ),
-    ]
-]
-Full_Script2_tab = [
-    [
-            sg.TabGroup
-        (
-            [[
-            sg.Tab("Code", Full_Script2),
-            sg.Tab("Langueage Note",script2_tab_code),
-            ]],
-
-            tab_location="center",
-            title_color="#9d4edd",
-            tab_background_color="#370666",
-            selected_title_color="#c77dff",
-            selected_background_color="#240046",
-            font=font,
-            key="Status"
-            
-        ),
-    ]
-]
-Full_Script3_tab = [
-    [
-            sg.TabGroup
-        (
-            [[
-            sg.Tab("Code", Full_Script3),
-            sg.Tab("Langueage Note",script3_tab_code),
-            ]],
-
-            tab_location="center",
-            title_color="#9d4edd",
-            tab_background_color="#370666",
-            selected_title_color="#c77dff",
-            selected_background_color="#240046",
-            font=font,
-            key="Status"
-            
-        ),
-    ]
-]
-Full_Script4_tab = [
-    [
-            sg.TabGroup
-        (
-            [[
-            sg.Tab("Code", Full_Script4),
-            sg.Tab("Langueage Note",script4_tab_code),
-            ]],
-
-            tab_location="center",
-            title_color="#9d4edd",
-            tab_background_color="#370666",
-            selected_title_color="#c77dff",
-            selected_background_color="#240046",
-            font=font,
-            key="Status"
-            
-        ),
-    ]
-]
-
 tab_Script = [
     [
             sg.TabGroup
         (
             [[
-            sg.Tab("CTab1",Full_Script1_tab),
-            sg.Tab("CTab2",Full_Script2_tab),
-            sg.Tab("CTab3",Full_Script3_tab),
-            sg.Tab("CTab4",Full_Script4_tab),
+            sg.Tab("CTab1",Full_Script),
+            sg.Tab("CTab2",Full_Script2),
+            sg.Tab("CTab3",Full_Script3),
+            sg.Tab("CTab4",Full_Script4),
             sg.Tab("Python Run",pythonCodeRunner),
             ]],
 
@@ -402,16 +303,14 @@ while True:
             tab2 = tab3 = tab4 = False
 
         if ".py" in file_path_Script:
-            window["-ScriptTab1-"].update(python)
+            window["-CHEAT-"].update(python)
             print("yes")
         elif ".c" in file_path_Script:
-            window["-ScriptTab1-"].update(cLang)
+            window["-CHEAT-"].update(cLang)
         elif ".html" in file_path_Script:
-            window["-ScriptTab1-"].update(htmlLang)
+            window["-CHEAT-"].update(htmlLang)
         elif ".gd" in file_path_Script:
-            window["-ScriptTab1-"].update(gdScriptLang)
-        else:
-            window["-ScriptTab1-"].update("This is Not Support")
+            window["-CHEAT-"].update(gdScriptLang)
 
     if event == "Save Tab1" and script_open == True:
         if file_path_Script:
@@ -444,16 +343,14 @@ while True:
 
 
         if ".py" in file_path_Script2:
-            window["-ScriptTab2-"].update(python)
+            window["-CHEAT-"].update(python)
             print("yes")
         elif ".c" in file_path_Script2:
-            window["-ScriptTab2-"].update(cLang)
+            window["-CHEAT-"].update(cLang)
         elif ".html" in file_path_Script2:
-            window["-ScriptTab2-"].update(htmlLang)
+            window["-CHEAT-"].update(htmlLang)
         elif ".gd" in file_path_Script2:
-            window["-ScriptTab2-"].update(gdScriptLang)
-        else:
-            window["-ScriptTab2-"].update("This is Not Support")
+            window["-CHEAT-"].update(gdScriptLang)
 
     if event == "Save Tab2" and script_open == True:
         if file_path_Script2 :
@@ -485,15 +382,13 @@ while True:
 
 
         if ".py" in file_path_Script3:
-            window["-ScriptTab3-"].update(python)
+            window["-CHEAT-"].update(python)
         elif ".c" in file_path_Script3:
-            window["-ScriptTab3-"].update(cLang)
+            window["-CHEAT-"].update(cLang)
         elif ".html" in file_path_Script3:
-            window["-ScriptTab3-"].update(htmlLang)
+            window["-CHEAT-"].update(htmlLang)
         elif ".gd" in file_path_Script3:
-            window["-ScriptTab3-"].update(gdScriptLang)
-        else:
-            window["-ScriptTab3-"].update("This is Not Support")
+            window["-CHEAT-"].update(gdScriptLang)
 
     if event == "Save Tab3" and script_open == True:
         if file_path_Script3 :
@@ -524,15 +419,13 @@ while True:
 
 
         if ".py" in file_path_Script4:
-            window["-ScriptTab4-"].update(python)
+            window["-CHEAT-"].update(python)
         elif ".c" in file_path_Script4:
-            window["-ScriptTab4-"].update(cLang)
+            window["-CHEAT-"].update(cLang)
         elif ".html" in file_path_Script4:
-            window["-ScriptTab4-"].update(htmlLang)
+            window["-CHEAT-"].update(htmlLang)
         elif ".gd" in file_path_Script4:
-            window["-ScriptTab4-"].update(gdScriptLang)
-        else:
-            window["-ScriptTab4-"].update("This is Not Support")
+            window["-CHEAT-"].update(gdScriptLang)
 
     if event == "Save Tab4" and script_open == True:
         if file_path_Script4 :
