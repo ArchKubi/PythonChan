@@ -18,4 +18,38 @@ don't forget ----> hide() | show()
 get_node(Label) or $Label -----> true false
 
 
+-- very simple Timer
+if timeDeck > 0:
+			timeDeck -= 0.01
+		else:
+			example play animation
+------------------------------------------
+
+-- Animation Tree\State Machine Example
+var playback : AnimationNodeStateMachinePlayback
+
+
+func _ready():
+	playback = get("parameters/playback")
+	playback.start("sit_idle")
+	active = true
+
+	if Input.is_action_just_pressed("1") and gnuChanDeck == false:
+		playback.travel("sit_take_Deck")
+------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 """
