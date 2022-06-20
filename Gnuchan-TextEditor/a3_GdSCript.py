@@ -39,7 +39,7 @@ func _ready():
 ------------------------------------------
 
 
-
+bonus material yazılımla uyumsuz
 
 
 

@@ -46,4 +46,19 @@ this is just python book
 -------------------------------------------
 
 
+
+
+example
+# gnuChanLib.py
+
+def topla(a, b):
+    return a + b
+
+
+# main.py
+
+from gnuChanLib import topla
+print("3 + 5 = ", topla(3,5))
+
+
 """

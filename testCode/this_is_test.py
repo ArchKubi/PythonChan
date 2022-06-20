@@ -1,36 +1,45 @@
+#!/usr/bin/env python
 import PySimpleGUI as sg
 
-sz = (7,1)
+#
+# An Async Demonstration of a media player
+# Uses button images for a super snazzy look
+# See how it looks here:
+# https://user-images.githubusercontent.com/13696193/43159403-45c9726e-8f50-11e8-9da0-0d272e20c579.jpg
+#
 
-column1 = [ [sg.ReadButton('UPDATE\nTEXT', size=sz)],
-            [sg.ReadButton('LOAD-\nTEXT', size=sz)],
-            [sg.ReadButton('SAVE-VOC', size=sz)],
-            [sg.ReadButton('CLEAR\nTEXT', size=sz)]
-            ]
 
-column2 = [[sg.ReadButton('Click here')]]
+def MediaPlayerGUI():
+    background = '#F0F0F0'
+    sg.set_options(background_color=background,
+                   element_background_color=background)
 
-col_layout = [
-                [sg.InputText(focus=True, key='word')],
-                [sg.Column(column2)]
-             ]
+    def ImageButton(title, key):
+        return sg.Button(title, button_color=(background, background),
+                    border_width=0, key=key)
 
-layout = [
-            [sg.Text("Study Text Box")],
-            [sg.Multiline(size=(50,10), font='Tahoma 13', key='-STLINE-', autoscroll=True), sg.Column(column1), sg.VerticalSeparator(pad=None), sg.Column(col_layout)]
-         ]
-        
+    # define layout of the rows
+    layout = [[sg.Text('Media File Player', font=("Helvetica", 25))],
+              [sg.Text('', size=(15, 2), font=("Helvetica", 14), key='output')],
+              [ImageButton('restart', key='Restart Song'), sg.Text(' ' * 2),
+               ImageButton('pause', key='Pause'), sg.Text(' ' * 2),
+               ImageButton('next', key='Next'), sg.Text(' ' * 2),
+               sg.Text(' ' * 2), ImageButton('exit', key='Exit')],
+              ]
 
-window = sg.Window("TbLLT Program", layout, resizable=True, finalize=True)
+    window = sg.Window('Media File Player', layout,
+                       default_element_size=(20, 1),
+                       font=("Helvetica", 25))
 
-while True:
-    event, values=window.read()
-    if event == sg.WIN_CLOSED or event == 'Exit':
-        break
-    if event == 'SAVE-VOC':
-        with open('someText(saved).txt', 'w+') as file:
-            savedText1 = file.write(values['-STLINE-'])
-        file.close()
-    if event == 'Click here':
-        window['-STLINE-'].update(values['word'])
-window.close()
+    while True:
+        event, values = window.read(timeout=100)
+        if event == 'Exit' or event == sg.WIN_CLOSED:
+            break
+        # If a button was pressed, display it on the GUI by updating the text element
+        if event != sg.TIMEOUT_KEY:
+            window['output'].update(event)
+
+    window.close()
+
+
+MediaPlayerGUI()

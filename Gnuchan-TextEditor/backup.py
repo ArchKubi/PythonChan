@@ -235,7 +235,7 @@ tab_group = [
 
 
 ####################################################################################
-window = sg.Window("Gnuchan Text Editor",tab_group,finalize=True,return_keyboard_events=True,resizable=True)
+window = sg.Window("Gnuchan Text Editor",tab_group,finalize=True,return_keyboard_events=True,resizable=True,size=(1200,700))
 window['_IN_'].bind("<Return>","_Enter")
 window.bind('<Configure>', "Configure")
 status = window['Status']
