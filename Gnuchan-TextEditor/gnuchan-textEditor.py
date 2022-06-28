@@ -73,26 +73,20 @@ gdScriptLang = a3_GdSCript
 
 
 ####################################################################################
-url = "https://i.ibb.co/jZzSq6Q/logo.png"
-response = requests.get(url, stream=True)
-response.raw.decode_content = True
-####################################################################################
-
-
-
-####################################################################################
 #### starting screen
 Default = [
-    [sg.Text("Welcome to GnuChan Text Editor", background_color="#19032e", expand_x=True,justification="center",font=font),
-     sg.Button("My Website", expand_x=True,font=font),
-     sg.Button("My itch.io", expand_x=True,font=font)
+    [
+    sg.Text("Welcome to GnuChan Text Editor", background_color="#19032e", expand_x=True,justification="center",font=font),
+    sg.Button("My Website", expand_x=True,font=font,border_width=0),
+    sg.Button("My itch.io", expand_x=True,font=font,border_width=0),
+    sg.Button("Exit", expand_x=True,font=font,border_width=0),
     ],
 
-    [border(sg.Image(data=response.raw.read(), expand_x=True, expand_y=True, background_color="#19032e")),
+    [border(sg.Image("logo.png", expand_x=True, expand_y=True, background_color="#19032e")),
      sg.Text(welcome, expand_x=True,font=font) 
     ], 
 
-    [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-CHEAT-",size=(900,900),font=font_bSizeFo,no_scrollbar=True)]
+    [sg.Multiline(cheat,background_color="#18012e",expand_x=True,key="-CHEAT-",size=(900,900),font=font_bSizeFo,no_scrollbar=True,border_width=0)]
         ]
 ####################################################################################
 
@@ -104,8 +98,12 @@ Default = [
 
 Full_TextEditor = [
     [sg.Text("Open File",font=font,key="OpenText")],
-    [sg.Button("Open Text", expand_x=True,font=font),sg.Button("Save Text", expand_x=True,font=font),sg.Button("Save As Text", expand_x=True,font=font)],
-    [sg.Multiline('', size=(60, 20), key='TextFile',expand_y=True,expand_x=True,enable_events=True,font=font_code,background_color="#18012e")],
+
+    [sg.Button("Open Text", expand_x=True,font=font,border_width=0),
+    sg.Button("Save Text", expand_x=True,font=font,border_width=0),
+    sg.Button("Save As Text", expand_x=True,font=font,border_width=0)],
+
+    [sg.Multiline('', size=(60, 20), key='TextFile',expand_y=True,expand_x=True,enable_events=True,font=font_code,background_color="#18012e",border_width=0)],
 ]
 ####################################################################################
 
@@ -116,11 +114,15 @@ Full_TextEditor = [
 #### code editor 
 
 Full_Script = [
-    [sg.Text("Open File Tab1",font=font,key="OpenScript")],
-    [sg.Button("Open Tab1", expand_x=True,font=font),sg.Button("Save Tab1",expand_x=True,font=font),sg.Button("Save As Tab1",expand_x=True,font=font)],
+    [sg.Text("Open File Tab1",font=font,key="OpenScript",border_width=0)],
     [
-    sg.Multiline(size=(5,200), justification='r', key='-ScriptNum1-', no_scrollbar=True, write_only=True, disabled=True,  p=0,font=font_code,background_color="#18012e"),
-    sg.Multiline(size=(200,200), key='ScriptFile', p=0,expand_y=True,expand_x=True,font=font_code,background_color="#18012e")
+    sg.Button("Open Tab1", expand_x=True,font=font,border_width=0),
+    sg.Button("Save Tab1",expand_x=True,font=font,border_width=0),
+    sg.Button("Save As Tab1",expand_x=True,font=font,border_width=0)
+    ],
+    [
+    sg.Multiline(size=(5,200), justification='r', key='-ScriptNum1-', no_scrollbar=True, write_only=True, disabled=True,  p=0,font=font_code,background_color="#18012e",border_width=0),
+    sg.Multiline(size=(200,200), key='ScriptFile', p=0,expand_y=True,expand_x=True,font=font_code,background_color="#18012e",border_width=0)
     ],
 ]  
 ####################################################################################
@@ -133,10 +135,12 @@ Full_Script = [
 
 Full_Script2 = [
     [sg.Text("Open File Tab2",font=font,key="OpenScript2")],
-    [sg.Button("Open Tab2", expand_x=True,font=font),sg.Button("Save Tab2",expand_x=True,font=font),sg.Button("Save As Tab2",expand_x=True,font=font)],
+    [sg.Button("Open Tab2", expand_x=True,font=font,border_width=0),
+    sg.Button("Save Tab2",expand_x=True,font=font,border_width=0),
+    sg.Button("Save As Tab2",expand_x=True,font=font,border_width=0)],
     [
-    sg.Multiline(size=(5,200), justification='r', key='-ScriptNum2-', no_scrollbar=True, write_only=True, disabled=True,  p=0,font=font_code,background_color="#18012e"),
-    sg.Multiline(size=(200,200), key='ScriptFile2', p=0,expand_y=True,expand_x=True,font=font_code,background_color="#18012e")
+    sg.Multiline(size=(5,200), justification='r', key='-ScriptNum2-', no_scrollbar=True, write_only=True, disabled=True,  p=0,font=font_code,background_color="#18012e",border_width=0),
+    sg.Multiline(size=(200,200), key='ScriptFile2', p=0,expand_y=True,expand_x=True,font=font_code,background_color="#18012e",border_width=0)
     ],
 ]
 ####################################################################################
@@ -146,10 +150,12 @@ Full_Script2 = [
 ####################################################################################
 Full_Script3 = [
     [sg.Text("Open File Tab3",font=font,key="OpenScript3")],
-    [sg.Button("Open Tab3", expand_x=True,font=font),sg.Button("Save Tab3",expand_x=True,font=font),sg.Button("Save As Tab3",expand_x=True,font=font)],
+    [sg.Button("Open Tab3", expand_x=True,font=font,border_width=0),
+    sg.Button("Save Tab3",expand_x=True,font=font,border_width=0),
+    sg.Button("Save As Tab3",expand_x=True,font=font,border_width=0)],
     [
-    sg.Multiline(size=(5,200), justification='r', key='-ScriptNum3-', no_scrollbar=True, write_only=True, disabled=True,  p=0,font=font_code,background_color="#18012e"),
-    sg.Multiline(size=(200,200), key='ScriptFile3', p=0,expand_y=True,expand_x=True,font=font_code,background_color="#18012e")
+    sg.Multiline(size=(5,200), justification='r', key='-ScriptNum3-', no_scrollbar=True, write_only=True, disabled=True,  p=0,font=font_code,background_color="#18012e",border_width=0),
+    sg.Multiline(size=(200,200), key='ScriptFile3', p=0,expand_y=True,expand_x=True,font=font_code,background_color="#18012e",border_width=0)
     ],
 ]
 ####################################################################################
@@ -171,7 +177,7 @@ def runScript():
     
 pythonCodeRunner = [
     [sg.Text("Run Your Python Script", background_color="#19032e", expand_x=True,justification="center",font=font)],
-    [sg.Button("Run Script", expand_x=True,font=font)],
+    [sg.Button("Run Script", expand_x=True,font=font,border_width=0)],
     [sg.Output(size=(60,15),font=font_bOutput,expand_x=True,expand_y=True,background_color="#18012e",key="OutputX")],
 ]
 ####################################################################################
@@ -194,7 +200,8 @@ def runCommand(cmd, timeout=None, window=None):
 
 GnuChan_Terminal = [
     [sg.Text("'| GnuChan Terminal | This is  Not InterActive Terminal |'",font=font,expand_x=True,justification="center")],
-    [sg.Input(key='_IN_',font=font,background_color="#18012e",expand_x=True),sg.Button('Run',font=font)],
+    [sg.Input(key='_IN_',font=font,background_color="#18012e",expand_x=True),
+    sg.Button('Run',font=font,border_width=0)],
     [sg.Output(size=(60,15),font=font_code,expand_x=True,expand_y=True,background_color="#18012e")],
                 ]
 ####################################################################################
@@ -208,9 +215,9 @@ tab_Script = [
             sg.TabGroup
         (
             [[
-            sg.Tab(" Code1 ",Full_Script),
-            sg.Tab(" Code2 ",Full_Script2),
-            sg.Tab(" Code3 ",Full_Script3),
+            sg.Tab(" Main ",Full_Script),
+            sg.Tab(" Script1 ",Full_Script2),
+            sg.Tab(" Script2 ",Full_Script3),
             sg.Tab(" Python Run ",pythonCodeRunner),
             ]],
 
@@ -220,7 +227,7 @@ tab_Script = [
             selected_title_color="#c77dff",
             selected_background_color="#240046",
             font=font,
-            key="Status"
+            key="Status",
             
         ),
     ]
@@ -241,7 +248,6 @@ tab_group = [
             sg.Tab("Terminal",GnuChan_Terminal),
             sg.Tab("Text",Full_TextEditor),
             sg.Tab("Script",tab_Script),
-            sg.Button("Exit", expand_x=True,font=font),
             ]],
 
             tab_location="center",

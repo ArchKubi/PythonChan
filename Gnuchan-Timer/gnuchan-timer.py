@@ -1,5 +1,4 @@
 import PySimpleGUI as sg
-import webbrowser, requests
 from time import time
 
 def border(elem):
@@ -19,16 +18,11 @@ sg.LOOK_AND_FEEL_TABLE['MyCreatedTheme'] = {
                                             }
 
 
-url = "https://i.ibb.co/jZzSq6Q/logo.png"
-response = requests.get(url, stream=True)
-response.raw.decode_content = True
-
-
 def create_window():
     sg.theme("MyCreatedTheme")
     layout = [
             [sg.Text("Welcome to GnuChan Timer", background_color="#19032e", expand_x=True,justification="center")],
-            [border(sg.Image(size=(350,350), data=response.raw.read(), expand_x=True, expand_y=True, background_color="#19032e"))],
+            [border(sg.Image("Gnuchan-Timer/logo.png", size=(350,350), expand_x=True, expand_y=True, background_color="#19032e"))],
             [sg.Text("0", key="-TIME-",background_color="#5a189a",expand_x=True),sg.VSeparator(),sg.Text("|GnuChan Help You|")],
             [sg.Button("Close"),sg.Button("Start", key = "-STARTSTOP-",expand_x=True),sg.Button("Lap", key="-LAP-", visible=False)],
             [sg.Button("My Website", expand_x=True), sg.Button("My itch.io", expand_x=True)],
@@ -63,7 +57,7 @@ while True:
  
     if active:
         elapsed_time = round(time() - start_time,1)
-        window["-TIME-"].update(elapsed_time)
+        window["-TIME-"].update(int(elapsed_time))
     if event == "-LAP-":
         window.extend_layout(window["-LAPS-"], [[sg.Text(lapse_amount),sg.VSeparator(),sg.Text(elapsed_time)]])
         lapse_amount += 1

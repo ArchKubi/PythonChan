@@ -20,9 +20,9 @@ get_node(Label) or $Label -----> true false
 
 -- very simple Timer
 if timeDeck > 0:
-			timeDeck -= 0.01
-		else:
-			example play animation
+	timeDeck -= 0.01
+else:
+	example play animation
 ------------------------------------------
 
 -- Animation Tree\State Machine Example
