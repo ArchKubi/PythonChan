@@ -82,7 +82,7 @@ Default = [
     sg.Button("Exit", expand_x=True,font=font,border_width=0),
     ],
 
-    [border(sg.Image("logo.png", expand_x=True, expand_y=True, background_color="#19032e")),
+    [border(sg.Image(expand_x=True, expand_y=True, background_color="#19032e")),
      sg.Text(welcome, expand_x=True,font=font) 
     ], 
 
